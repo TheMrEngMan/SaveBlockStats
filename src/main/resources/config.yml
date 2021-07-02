@@ -1,0 +1,7 @@
+DisabledWorlds: []
+#  - world
+#  - world_nether
+#  - world_the_end
+
+ReloadedMessage: '&8[&7SBS&8] &aConfiguration was reloaded!'
+NoPermissionMessage: '&8[&7SBS&8] &cSorry, you don''t have permission to do that!'
