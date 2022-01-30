@@ -3,7 +3,7 @@ main: com.MrEngMan.SaveBlockStats.Main
 author: MrEngMan
 description: Count how many time blockes were placed and broken by players in each chunk
 api-version: '1.13'
-version: 1.0
+version: 1.1
 
 commands:
   sbsreload:

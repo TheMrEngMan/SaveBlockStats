@@ -3,5 +3,18 @@ DisabledWorlds: []
 #  - world_nether
 #  - world_the_end
 
+# Use names from this list: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
+TreatPlacedBlacklistAsWhitelist: false # If true, only count the listed placed blocks
+BlocksPlacedBlacklist:
+  - fire # Don't count using flint & steel
+  - end_portal_frame #  Don't count placing eyes in end portal frames
+
+TreatBrokenBlacklistAsWhitelist: false # If true, only count the listed broken blocks
+BlocksBrokenBlacklist:
+  - fire # Don't count extinguishing fires
+
 ReloadedMessage: '&8[&7SBS&8] &aConfiguration was reloaded!'
 NoPermissionMessage: '&8[&7SBS&8] &cSorry, you don''t have permission to do that!'
+
+# Print names of blocks placed/broken in console, leave as false
+debug: false

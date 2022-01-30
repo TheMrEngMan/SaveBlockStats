@@ -1,6 +1,7 @@
 package com.MrEngMan.SaveBlockStats;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -13,6 +14,7 @@ import org.bukkit.event.Listener;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Main extends JavaPlugin implements Listener {
 
@@ -22,6 +24,12 @@ public class Main extends JavaPlugin implements Listener {
     NamespacedKey blocksBrokenKey;
 
     ArrayList<String> disabledWorldsList;
+    boolean treatPlacedBlacklistAsWhitelist = false;
+    boolean treatBrokenBlacklistAsWhitelist = false;
+    List<Material> blocksPlacedBlacklist = new ArrayList<>();
+    List<Material> blocksBrokenBlacklist = new ArrayList<>();
+
+    boolean debug = false;
 
     // When plugin is first enabled
     @SuppressWarnings("static-access")
@@ -55,10 +63,45 @@ public class Main extends JavaPlugin implements Listener {
 
         disabledWorldsList = (ArrayList<String>) getConfig().getStringList("DisabledWorlds");
 
+        treatBrokenBlacklistAsWhitelist = getConfig().getBoolean("TreatBrokenBlacklistAsWhitelist", false);
+        blocksPlacedBlacklist.clear();
+        for (String line : getConfig().getStringList("BlocksPlacedBlacklist")) {
+            Material material = Material.matchMaterial(line.toUpperCase());
+            if (material != null) { blocksPlacedBlacklist.add(material); }
+        }
+        treatPlacedBlacklistAsWhitelist = getConfig().getBoolean("TreatPlacedBlacklistAsWhitelist", false);
+        blocksBrokenBlacklist.clear();
+        for (String line : getConfig().getStringList("BlocksBrokenBlacklist")) {
+            Material material = Material.matchMaterial(line.toUpperCase());
+            if (material != null) { blocksBrokenBlacklist.add(material); }
+        }
+        debug = getConfig().getBoolean("debug", false);
+
+
     }
 
     public boolean isWorldDisabled(World world) {
         return disabledWorldsList.contains(world.getName());
+    }
+
+    public boolean isTreatPlacedBlacklistAsWhitelist() {
+        return treatPlacedBlacklistAsWhitelist;
+    }
+
+    public boolean isTreatBrokenBlacklistAsWhitelist() {
+        return treatBrokenBlacklistAsWhitelist;
+    }
+
+    public List<Material> getBlocksPlacedBlacklist() {
+        return blocksPlacedBlacklist;
+    }
+
+    public List<Material> getBlocksBrokenBlacklist() {
+        return blocksBrokenBlacklist;
+    }
+
+    public boolean debugEnabled() {
+        return debug;
     }
 
     public class ReloadCommandHandler implements CommandExecutor {
